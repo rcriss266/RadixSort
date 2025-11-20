@@ -1,19 +1,60 @@
+import java.io.*;
+import java.util.*;
+
 public class RadixSort {
 
     public static void main(String[] args) {
-                int[] arr = {170, 45, 75, 90, 802, 24, 2, 66};
+
+        int[] arr = leerArchivo("Entrada.txt");
+
+        if (arr.length == 0) {
+            System.out.println("El archivo está vacío o no pudo leerse.");
+            return;
+        }
 
         System.out.println("Antes de ordenar:");
-        for (int num : arr) System.out.print(num + " ");
+        imprimir(arr);
 
         radixSort(arr);
 
         System.out.println("\nDespués de ordenar:");
-        for (int num : arr) System.out.print(num + " ");
-
-
+        imprimir(arr);
     }
-        // Obtener el valor máximo del arreglo
+
+    
+    // aqui lee el archivo
+    public static int[] leerArchivo(String nombreArchivo) {
+        try {
+            Scanner sc = new Scanner(new File(nombreArchivo));
+            List<Integer> lista = new ArrayList<>();
+
+            while (sc.hasNextInt()) {   // Lee números
+                lista.add(sc.nextInt());
+            }
+
+            sc.close();
+
+            int[] arr = new int[lista.size()];
+            for (int i = 0; i < lista.size(); i++) {
+                arr[i] = lista.get(i);
+            }
+
+            return arr;
+
+        } catch (Exception e) {
+            System.out.println("Error al leer archivo: " + e.getMessage());
+            return new int[0];
+        }
+    }
+
+    
+    public static void imprimir(int[] arr) {
+        for (int num : arr) System.out.print(num + " ");
+        System.out.println();
+    }
+
+    
+
     public static int getMax(int[] arr) {
         int max = arr[0];
         for (int num : arr) {
@@ -23,7 +64,7 @@ public class RadixSort {
         }
         return max;
     }
-        
+
     public static void countingSort(int[] arr, int exp) {
         int n = arr.length;
         int[] output = new int[n];
@@ -48,7 +89,7 @@ public class RadixSort {
             arr[i] = output[i];
         }
     }
-        
+
     public static void radixSort(int[] arr) {
         int max = getMax(arr);
 
@@ -56,8 +97,8 @@ public class RadixSort {
             countingSort(arr, exp);
         }
     }
-    
-
-
-
 }
+
+
+
+
